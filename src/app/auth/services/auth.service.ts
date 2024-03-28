@@ -18,7 +18,7 @@ export class AuthService {
   currentUser = computed(() => this._currentUser());
   authStatus = computed(() => this._authStatus());
 
-  constructor() { 
+  constructor() {
     this.checkAuthStatus().subscribe();
   }
 
@@ -44,6 +44,7 @@ export class AuthService {
     const url = `${this.baseUrl}/auth/check-token`;
     const token = localStorage.getItem('token');
     if (!token) {
+      this.logout();
       return of(false);
     }
     const headers = new HttpHeaders()
@@ -59,4 +60,9 @@ export class AuthService {
       );
   }
 
+  logout(): void {
+    this._currentUser.set(null);
+    this._authStatus.set(AuthStatus.notAuthenticated);
+    localStorage.removeItem('token');
+  }
 }

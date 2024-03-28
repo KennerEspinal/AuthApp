@@ -15,4 +15,8 @@ export class DashboardLayoutComponent {
   //   return this._aS.currentUser();
   // }
 
+  logout(){
+    this._aS.logout();
+  }
+
 }
