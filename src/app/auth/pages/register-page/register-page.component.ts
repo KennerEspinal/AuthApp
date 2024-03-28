@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register-page',
@@ -6,5 +7,18 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class RegisterPageComponent {
+
+  private _fb = inject(FormBuilder);
+
+  registerForm = this._fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    password_confirmation: ['', [Validators.required]]
+  });
+
+  register() {
+    console.log(this.registerForm.value);
+  }
 
 }
